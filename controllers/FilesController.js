@@ -150,7 +150,7 @@ class FilesController {
     const pageNum = page || 0;
     const files = dbClient.db.collection('files');
     let query;
-    if (parentId) {
+    if (!parentId) {
       query = { userId: user._id };
     } else {
       query = { userId: user._id, parentId: ObjectID(parentId) };
@@ -272,7 +272,7 @@ class FilesController {
             return response.status(404).json({ error: 'Not found' });
           }
         } else {
-          console.log(`Wrong user: file.userId: ${file.userId} userId=${user._id}`);
+          console.log(`Wrong user: file.userId=${file.userId}; userId=${user._id}`);
           return response.status(404).json({ error: 'Not found' });
         }
       }
